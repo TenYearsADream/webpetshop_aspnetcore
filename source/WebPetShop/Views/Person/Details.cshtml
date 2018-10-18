@@ -1,0 +1,180 @@
+﻿@model WebPetShop.Models.People.Person
+
+@{
+    ViewBag.Title = "Pessoa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Mostrar Pessoa</h2>
+<br />
+
+<div>
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.Type)*@
+            @if (Model.Type == 0)
+            {
+                @Html.DisplayName("Física")
+            }
+            else
+            {
+                @Html.DisplayName("Jurídica")
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        @if (Model.Type == 1)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.SocialName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SocialName)
+            </dd>
+        }
+
+        @if (Model.Type == 0)
+        {
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Gender)
+            </dt>
+
+            <dd>
+                @*@Html.DisplayFor(model => model.Gender)*@
+                @Model.getPersonTypeById("Gender", Model.Gender)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Birthdate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Birthdate)
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Document1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Document1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Document2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Document2)
+        </dd>
+
+            @if (Model.Type == 0)
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.MotherName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MotherName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.FatherName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FatherName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Address.Name)
+                </dt>
+            }
+
+
+            @if (Model.Address.Complement != null)
+            {
+                <dd>
+                    @Html.DisplayFor(model => model.Address.Name), @Html.DisplayFor(model => model.Address.Number), @Html.DisplayFor(model => model.Address.Complement),
+                    @Html.DisplayFor(model => model.Address.City) -  @Html.DisplayFor(model => model.Address.State)
+                </dd>
+            }
+
+            @if (Model.Address.Complement == null)
+            {
+                <dd>
+                    @Html.DisplayFor(model => model.Address.Name), @Html.DisplayFor(model => model.Address.Number),
+                    @Html.DisplayFor(model => model.Address.City) -  @Html.DisplayFor(model => model.Address.State)
+                </dd>
+            }
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Address.ZipCode)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Address.ZipCode)
+            </dd>
+
+            <dt>
+                @Html.DisplayName("Contato")
+            </dt>
+            <dd>
+                <table style="height:auto; width:auto;">
+                    @foreach(var item in Model.Contacts)
+                    {
+                        <tr>
+                            <td style="width:auto;">@item.Description</td>
+                        </tr>
+                    }
+                </table>
+            </dd>
+
+
+            <dt>
+                @*@Html.DisplayNameFor(model => model.AddDate)*@
+                @Html.DisplayName("Inclusão")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AddDate) -  @Html.DisplayFor(model => model.AddUser)
+            </dd>
+
+            <dt>
+                @*@Html.DisplayNameFor(model => model.EditDate)*@
+                @Html.DisplayName("Alteração")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EditDate) - @Html.DisplayFor(model => model.EditUser)
+            </dd>
+
+            @*<dt>
+                @Html.DisplayNameFor(model => model.EditUser)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EditUser)
+            </dd>*@
+
+        </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">Alterar</a>
+    <a asp-action="Index" class="btn btn-default">Voltar</a>
+</div>

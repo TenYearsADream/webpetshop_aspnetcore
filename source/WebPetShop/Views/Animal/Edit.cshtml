@@ -1,0 +1,95 @@
+﻿@model WebPetShop.Models.Animals.Animal
+
+@{
+    ViewData["Title"] = "Animais";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Alterar Animal</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Type" class="control-label"></label>
+                @*<input asp-for="Type" class="form-control" />*@
+                @Html.DropDownListFor(model => model.Type, new List<SelectListItem>
+                 {
+                    new SelectListItem() {Text = "", Value= "0"},
+                    new SelectListItem() {Text = "Cachorro", Value= "1"},
+                    new SelectListItem() {Text = "Coelho", Value= "2"},
+                    new SelectListItem() {Text = "Gato", Value= "3"},
+                    new SelectListItem() {Text = "Pássaro", Value= "4"},
+                    new SelectListItem() {Text = "Peixe", Value= "5"},
+                 }, new { @class = "form-control", @id = "Type" })
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Specie" class="control-label"></label>
+                <input asp-for="Specie" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Specie" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label asp-for="Birthdate" class="control-label"></label>
+                <input asp-for="Birthdate" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Birthdate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" autocomplete="off" />
+            </div>
+            <div class="form-group" style="display:none">
+                <label asp-for="AddDate" class="control-label"></label>
+                <input asp-for="AddDate" class="form-control" />
+                <span asp-validation-for="AddDate" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="display:none">
+                <label asp-for="AddUser" class="control-label"></label>
+                <input asp-for="AddUser" class="form-control" />
+                <span asp-validation-for="AddUser" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="display:none">
+                <label asp-for="EditDate" class="control-label"></label>
+                <input asp-for="EditDate" class="form-control" />
+                <span asp-validation-for="EditDate" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="display:none">
+                <label asp-for="EditUser" class="control-label"></label>
+                <input asp-for="EditUser" class="form-control" />
+                <span asp-validation-for="EditUser" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-default" />
+                <a asp-action="Index" class="btn btn-default">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $.validator.methods.range = function (value, element, param) {
+            var globalizedValue = value.replace(".", "");
+            globalizedValue = globalizedValue.replace(",", ".");
+            return this.optional(element) ||(globalizedValue >= param[0] && globalizedValue <= param[1]);
+        };
+
+        $.validator.methods.number = function (value, element) {
+            return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+        };
+
+    </script>
+}

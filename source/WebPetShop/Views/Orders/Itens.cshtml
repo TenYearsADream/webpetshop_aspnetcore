@@ -1,0 +1,110 @@
+﻿@model WebPetShop.Models.Orders.OrderItem
+
+@{
+    ViewData["Title"] = "Pedido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Pedido</h2>
+<h4>@ViewBag.Type</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label class="control-label">Pessoa:</label>
+            @Html.DisplayName(ViewBag.PersonName)
+        </div>
+    </div>
+</div>
+
+<h4>Lançar Item</h4>
+<div id="launch" class="orderItem">
+    
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="AddItem">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group" style="display:none;">
+                    <input asp-for="OrderId" class="form-control" autocomplete="off" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="AnimalType" class="control-label">Selecione Tipo</label>
+                    <select id="ddlAnimalType" asp-for="AnimalType" class="form-control" asp-items="@(new SelectList(ViewBag.AnimalType,"Id","Name"))"></select>
+                    <span asp-validation-for="AnimalType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AnimalId" class="control-label">Selecione o animail</label>
+                    <select id="ddlAnimals" asp-for="AnimalId" class="form-control" asp-items="@(new SelectList(string.Empty,"Id","Name"))"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" autocomplete="off" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Amount" class="control-label">Quantidade</label>
+                    <input asp-for="Amount" class="form-control" autocomplete="off" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PriceUnit" class="control-label"></label>
+                    <input asp-for="PriceUnit" class="form-control" autocomplete="off" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="form-group">
+                    <input type="submit" value="Incluir" class="btn btn-default" />
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<br />
+<div id="itens" class="orderItens">
+    @await Html.PartialAsync("ItensOrder", TempData["Order"])
+</div>
+<br />
+<div id="controller">
+    @Html.ActionLink("Finalizar", "CloseOrder", "orders", new { orderId = Model.OrderId }, new { @class = "btn btn-default" })
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $.validator.methods.range = function (value, element, param) {
+            var globalizedValue = value.replace(".", "");
+            globalizedValue = globalizedValue.replace(",", ".");
+            return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+        };
+
+        $.validator.methods.number = function (value, element) {
+            return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+        };
+
+        $(document).ready(function () {
+            $('#ddlAnimalType').change(function () {
+                var url = '@Url.Content("~/")' + "orders/GetAnimalAdoptionByType";
+                var ddlsource = "#ddlAnimalType";
+                
+                $.getJSON(url, { ddlAnimalType: $(ddlsource).val() }, function (data) {
+                    var itens = '';
+                    //console.log(data);
+                    $('#ddlAnimals').empty();
+                    $.each(data, function (i, animal) {
+                        itens += "<option value='" + animal.value + "'>" + animal.text + "</option>";
+                    });
+                    $('#ddlAnimals').html(itens);
+                });
+
+            });
+
+        });
+
+    </script>
+
+}

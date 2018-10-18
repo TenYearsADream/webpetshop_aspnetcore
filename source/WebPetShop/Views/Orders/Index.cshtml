@@ -1,0 +1,102 @@
+﻿@model IEnumerable<WebPetShop.Models.Orders.Order>
+
+@{
+    ViewData["Title"] = "Pedido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Pedido</h2>
+<br />
+
+<p>
+    <a asp-action="Create" class="btn btn-default">Novo</a>
+</p>
+
+<div id="grid" style="border:1px solid black; height:350px; overflow-y: auto; font-size:10pt;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Person)
+                </th>
+                <th>
+                    @Html.DisplayName("Qtde")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Total)
+                </th>
+                <th>
+                    @Html.DisplayName("Situação")
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.AddDate)*@
+                    @Html.DisplayName("Inclusão")
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.EditDate)*@
+                    @Html.DisplayName("Alteração")
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Type)*@
+                        @if (item.Type == 1)
+                        {
+                            @Html.DisplayName("Venda")
+                        }
+
+                        @if (item.Type == 2)
+                        {
+                            @Html.DisplayName("Adoção")
+                        }
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Person.Name)
+                    </td>
+                    <td>
+                        @item.Itens.Count
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Total)
+                    </td>
+                    <td>
+                        @if (item.Situation == "A")
+                        {
+                            @Html.DisplayName("Aberto");
+                        }
+
+                        @if (item.Situation == "C")
+                        {
+                            @Html.DisplayName("Cancelado");
+                        }
+
+                        @if (item.Situation == "F")
+                        {
+                            @Html.DisplayName("Finalizado");
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AddDate) - @Html.DisplayFor(modelItem => item.AddUser)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EditDate) - @Html.DisplayFor(modelItem => item.EditUser)
+                    </td>
+                    <td>
+                        @*<a asp-action="Edit" asp-route-id="@item.Id">Alterar</a> |*@
+                        @*<a asp-action="Delete" asp-route-id="@item.Id">Excluir</a> |*@
+                        <a asp-action="Details" asp-route-id="@item.Id">Mostrar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

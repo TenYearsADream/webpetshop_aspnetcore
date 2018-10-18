@@ -1,0 +1,67 @@
+﻿@model WebPetShop.Models.Orders.Order
+
+@{
+    ViewData["Title"] = "Pedido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Excluir Pedido</h2>
+
+<h3>Deseja mesmo excluir esse pedido?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd>
+            @*@Html.DisplayFor(model => model.Type)*@
+            @if (Model.Type == 1)
+            {
+                @Html.DisplayName("Venda")
+            }
+
+            @if (Model.Type == 2)
+            {
+                @Html.DisplayName("Adoção")
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Person)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Person.Name)
+        </dd>
+
+        @if (Model.Type == 1)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Total)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Total)
+            </dd>
+        }
+
+            <dt>
+                @*@Html.DisplayNameFor(model => model.AddDate)*@
+                @Html.DisplayName("Inclusão")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.AddDate) - @Html.DisplayFor(model => model.AddUser)
+            </dd>
+            <dt>
+                @*@Html.DisplayNameFor(model => model.EditDate)*@
+                @Html.DisplayName("Alteração")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.EditDate) - @Html.DisplayFor(model => model.EditUser)
+            </dd>
+           
+        </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

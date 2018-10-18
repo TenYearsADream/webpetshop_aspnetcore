@@ -1,0 +1,49 @@
+﻿@model WebPetShop.Models.Animals.Animal
+
+@{
+    ViewData["Title"] = "Animais";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Consultar Animal</h2>
+<br />
+
+<div id="Find">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Type,"Tipo", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Type, new List<SelectListItem>
+                     {
+                        new SelectListItem() {Text = "", Value= "0"},
+                        new SelectListItem() {Text = "Cachorro", Value= "1"},
+                        new SelectListItem() {Text = "Coelho", Value= "2"},
+                        new SelectListItem() {Text = "Gato", Value= "3"},
+                        new SelectListItem() {Text = "Pássaro", Value= "4"},
+                        new SelectListItem() {Text = "Peixe", Value= "5"},
+                     }, new { @class = "form-control", @id = "Type" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Specie, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Specie, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.Specie, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Consultar" class="btn btn-default" />
+                    <a asp-action="Index" class="btn btn-default">Cancelar</a>
+                </div>
+            </div>
+
+        </div>
+
+     }
+</div>

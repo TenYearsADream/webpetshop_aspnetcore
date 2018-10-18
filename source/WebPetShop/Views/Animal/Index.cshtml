@@ -1,0 +1,87 @@
+﻿@model IEnumerable<WebPetShop.Models.Animals.Animal>
+
+@{
+    ViewData["Title"] = "Animais";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lista de Animais</h2>
+<br />
+
+<p>
+    <a asp-action="Create" class="btn btn-default">Novo</a>
+    <a asp-action="Find" class="btn btn-default">Consultar</a>
+</p>
+
+<div id="grid" style="border:1px solid black; height:350px; overflow-y: auto; font-size:10pt;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Specie)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Birthdate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayName("Inclução")
+                </th>
+                <th>
+                    @Html.DisplayName("Alteração")
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Type)*@
+                        @item.getAnimalTypeById(item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Specie)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Birthdate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AddDate) -
+                        @Html.DisplayFor(modelItem => item.AddUser)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EditDate) -
+                        @Html.DisplayFor(modelItem => item.EditUser)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Alterar</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Mostrar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

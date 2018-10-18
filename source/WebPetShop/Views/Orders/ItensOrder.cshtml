@@ -1,0 +1,47 @@
+﻿@model WebPetShop.Models.Orders.Order
+
+
+<div class="container-fluid">
+    <div id="itens" class="">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Qtde</th>
+                    <th>Unitário</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i <= Model.Itens.Count - 1; i++)
+                {
+                    var aux = i + 1;
+                    <tr>
+                        <td>@aux</td>
+                        <td>
+                            @Model.Itens[i].Animal.getAnimalTypeById(@Model.Itens[i].AnimalType):
+                            @Model.Itens[i].Animal.Specie
+                        </td>
+                        <td>
+                            R$:@Model.Itens[i].Price
+                        </td>
+                        <td>
+                            @Model.Itens[i].Amount x
+                        </td>
+                        <td>
+                            R$ @Model.Itens[i].PriceUnit
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

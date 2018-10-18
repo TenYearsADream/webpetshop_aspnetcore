@@ -1,0 +1,117 @@
+﻿@model WebPetShop.Models.Orders.Order
+
+@{
+    ViewData["Title"] = "Pedido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Mostrar Pedido</h2>
+<br />
+
+<div class="row">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd>
+            @*@Html.DisplayFor(model => model.Type)*@
+            @if (Model.Type == 1)
+            {
+                @Html.DisplayName("Venda")
+            }
+
+            @if (Model.Type == 2)
+            {
+                @Html.DisplayName("Adoção")
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Person)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Person.Name)
+        </dd>
+
+        @if (Model.Type == 1)
+        {   
+         <dt>
+                @Html.DisplayNameFor(model => model.Total)
+         </dt>
+         <dd>
+                @Html.DisplayFor(model => model.Total)
+          </dd>
+        }
+
+        <dt>
+             @Html.DisplayName("Situação")
+        </dt>
+        <dd>
+            @if (Model.Situation == "A")
+            {
+                @Html.DisplayName("Aberto")
+            }
+
+            @if (Model.Situation == "C")
+            {
+                @Html.DisplayName("Cancelado")
+            }
+
+            @if (Model.Situation == "F")
+            {
+                @Html.DisplayName("Finalizado")
+            }
+
+        </dd>
+
+        <dt>
+            @*@Html.DisplayNameFor(model => model.AddDate)*@
+            @Html.DisplayName("Inclusão")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AddDate) -  @Html.DisplayFor(model => model.AddUser)
+        </dd>
+        <dt>
+            @*@Html.DisplayNameFor(model => model.EditDate)*@
+            @Html.DisplayName("Alteração")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EditDate) - @Html.DisplayFor(model => model.EditUser)
+        </dd>
+
+    </dl>
+
+    <div id="itens" class="tabDetail">
+        
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i <= Model.Itens.Count - 1; i++)
+                    {
+                        var aux = i + 1;
+                        <tr>
+                            <td>@aux</td>
+                            <td>
+                                Qtde:@Model.Itens[i].Amount
+                                @Model.Itens[i].Animal.getAnimalTypeById(@Model.Itens[i].AnimalType):
+                                @Model.Itens[i].Animal.Specie
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+    </div>
+
+</div>
+<br />
+<br />
+
+<div>
+    @*<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">Alterar</a>*@ 
+    <a asp-action="Index" class="btn btn-default">Voltar</a>
+</div>

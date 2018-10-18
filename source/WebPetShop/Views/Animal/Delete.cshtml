@@ -1,0 +1,33 @@
+﻿@model WebPetShop.Models.Animals.Animal
+
+@{
+    ViewData["Title"] = "Animais";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Excluir Animal</h2>
+
+<h3>Deseja mesmo excluir esse registro de animal?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd>
+            @*@Html.DisplayFor(model => model.Type)*@
+            @Html.DisplayName(Model.getAnimalTypeById(Model.Type))
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Specie)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Specie)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Excluir" class="btn btn-default" />
+        <a asp-action="Index" class="btn btn-default">Cancelar</a>
+    </form>
+</div>
